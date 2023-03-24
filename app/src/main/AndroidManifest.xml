@@ -14,7 +14,9 @@
         android:theme="@style/Theme.SensorAppProject"
         tools:targetApi="31">
 
-        <activity android:name="com.example.sensorappproject.activities.MainActivity">
+        <activity
+            android:name="com.example.sensorappproject.activities.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
