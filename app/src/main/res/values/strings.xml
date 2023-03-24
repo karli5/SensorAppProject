@@ -3,4 +3,5 @@
     <string name="home">Home</string>
     <string name="sensors">Sensors</string>
     <string name="data">Data</string>
+    <string name="home_text">In this app ...</string>
 </resources>
