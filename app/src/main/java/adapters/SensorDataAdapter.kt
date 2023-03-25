@@ -30,23 +30,16 @@ class SensorDataAdapter internal constructor(context: Context) : RecyclerView.Ad
         val sensorData = sensorDataList[position]
 
         // Zeitstempel formatieren
-        val date = Date(sensorData.timestamp)
-        val dateFormat = SimpleDateFormat("dd.MM.yyyy, HH:mm:ss", Locale.getDefault())
-        val formattedTimestamp = dateFormat.format(date)
+        val formattedTimestamp = formatTimestamp(sensorData.timestamp)
 
         // Sensorwerte formatieren
-        val sensorValuesList = sensorData.sensorValues.split(",")
-        val formattedSensorValues = when (sensorValuesList.size) {
-            1 -> "X: ${sensorValuesList[0]}"
-            3 -> "X: ${sensorValuesList[0]}  Y: ${sensorValuesList[1]}  Z: ${sensorValuesList[2]}"
-            else -> "N/A"
-        }
+        val formattedSensorValues = formatSensorValues(sensorData.sensorValues)
 
         // Text für den TextView erstellen
         val sensorDataText = """
-        Sensor: ${sensorData.sensorName}
-        Timestamp: $formattedTimestamp
-        $formattedSensorValues
+    Sensor: ${sensorData.sensorName}
+    Timestamp: $formattedTimestamp
+    $formattedSensorValues
     """.trimIndent()
 
         holder.sensorDataItemView.text = sensorDataText
@@ -59,4 +52,21 @@ class SensorDataAdapter internal constructor(context: Context) : RecyclerView.Ad
         this.sensorDataList = sensorData
         notifyDataSetChanged()
     }
+
+    fun formatTimestamp(timestamp: Long): String {
+        val date = Date(timestamp)
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy, HH:mm:ss", Locale.getDefault())
+        return dateFormat.format(date)
+    }
+
+    fun formatSensorValues(sensorValues: String): String {
+        val sensorValuesList = sensorValues.split(",")
+        return when (sensorValuesList.size) {
+            1 -> "X: ${sensorValuesList[0]}"
+            3 -> "X: ${sensorValuesList[0]}  Y: ${sensorValuesList[1]}  Z: ${sensorValuesList[2]}"
+            else -> "N/A"
+        }
+    }
+
+
 }
