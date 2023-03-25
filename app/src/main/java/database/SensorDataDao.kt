@@ -1,21 +1,19 @@
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import database.SensorData
 
 @Dao
 interface SensorDataDao {
-    @Insert
-    suspend fun insert(sensorData: SensorData)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(sensorData: SensorData): Long
 
     @Query("SELECT * FROM sensor_data")
     fun getAllSensorData(): LiveData<List<SensorData>>
 
-    @Query("DELETE FROM sensor_data")
-    suspend fun deleteAll()
-
     @Delete
-    suspend fun delete(sensorData: SensorData)
+    fun delete(sensorData: SensorData): Int
+
+    @Query("DELETE FROM sensor_data")
+    fun deleteAll(): Int
 }
