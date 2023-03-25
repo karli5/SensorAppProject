@@ -6,4 +6,5 @@
     <string name="home_text">In this app ...</string>
     <string name="sensor_start">Start</string>
     <string name="sensor_stop">Stop</string>
+    <string name="delete_all">Alle löschen</string>
 </resources>

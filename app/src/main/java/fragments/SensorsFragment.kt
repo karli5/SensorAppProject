@@ -61,6 +61,11 @@ class SensorsFragment : Fragment(), SensorEventListener {
                 sensorManager.unregisterListener(this)
             }
         }
+        //Save current Sensor
+        savedInstanceState?.let {
+            val selectedSensorIndex = it.getInt("selectedSensorIndex")
+            binding.sensorSpinner.setSelection(selectedSensorIndex)
+        }
     }
 
 
@@ -150,6 +155,12 @@ class SensorsFragment : Fragment(), SensorEventListener {
             }
         }
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("selectedSensorIndex", binding.sensorSpinner.selectedItemPosition)
+    }
+
 
 }
 
