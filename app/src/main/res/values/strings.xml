@@ -4,4 +4,6 @@
     <string name="sensors">Sensors</string>
     <string name="data">Data</string>
     <string name="home_text">In this app ...</string>
+    <string name="sensor_start">Start</string>
+    <string name="sensor_stop">Stop</string>
 </resources>

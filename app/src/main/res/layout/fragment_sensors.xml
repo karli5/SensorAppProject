@@ -22,4 +22,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sensor_spinner" />
 
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/sensor_start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sensor_info" />
+
+
+    <TextView
+        android:id="@+id/liveSensorValues"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sensor_info" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
