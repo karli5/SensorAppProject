@@ -1,10 +1,12 @@
+package database
+
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import database.SensorData
 
-@Database(entities = [SensorData::class], version = 1)
+@Database(entities = [SensorData::class], version = 1, exportSchema = false)
 abstract class SensorDatabase : RoomDatabase() {
 
     abstract fun sensorDataDao(): SensorDataDao
@@ -14,14 +16,18 @@ abstract class SensorDatabase : RoomDatabase() {
         private var INSTANCE: SensorDatabase? = null
 
         fun getInstance(context: Context): SensorDatabase {
-            return INSTANCE ?: synchronized(this) {
+            val tempInstance = INSTANCE
+            if (tempInstance != null) {
+                return tempInstance
+            }
+            synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     SensorDatabase::class.java,
-                    "sensor_data.db"
+                    "sensor_database"
                 ).build()
                 INSTANCE = instance
-                instance
+                return instance
             }
         }
     }

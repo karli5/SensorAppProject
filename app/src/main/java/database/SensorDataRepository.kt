@@ -1,6 +1,5 @@
 package database
 
-import SensorDataDao
 import androidx.lifecycle.LiveData
 import database.SensorData
 import kotlinx.coroutines.Dispatchers

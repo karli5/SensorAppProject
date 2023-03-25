@@ -88,6 +88,8 @@ class SensorsFragment : Fragment(), SensorEventListener {
                     Power: ${sensor.power} mA
                     """.trimIndent()
                 binding.sensorInfo.text = sensorInfo
+                this@SensorsFragment.sensor = sensorList[position]
+                sensorName = sensor.name
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -101,10 +103,10 @@ class SensorsFragment : Fragment(), SensorEventListener {
     override fun onSensorChanged(event: SensorEvent?) {
         val liveSensorValues = event?.values
         if (liveSensorValues != null) {
+            currentSensorValues = liveSensorValues.clone()
             displayLiveSensorValues(liveSensorValues)
         }
     }
-
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
         // Implementieren Sie diese Methode, wenn Sie die Änderungen der Genauigkeit behandeln möchten
     }
