@@ -21,7 +21,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import viewmodels.SensorDataViewModel
 
-// Class to choose a sensor from all avaiable sensors, recording sensor data and
+// Class to choose a sensor from all available sensors, recording sensor data and
 // display more informations about the sensor
 class SensorsFragment : Fragment(), SensorEventListener {
 
@@ -34,6 +34,7 @@ class SensorsFragment : Fragment(), SensorEventListener {
     private var sensorName: String = ""
     private lateinit var sensorDataViewModel: SensorDataViewModel
     private var currentSensorValues: FloatArray = floatArrayOf()
+    private var SECOND: Long = 1000;
 
     // Inflate the layout of the fragment
     override fun onCreateView(
@@ -167,7 +168,7 @@ class SensorsFragment : Fragment(), SensorEventListener {
                 if (sensorData != null) {
                     sensorDataViewModel.insert(sensorData)
                 }
-                delay(1000)
+                delay(SECOND)
             }
         }
     }
