@@ -11,6 +11,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.*
 
+// Class for testing SensorDataAdapter
 @RunWith(AndroidJUnit4::class)
 class SensorDataAdapterTest {
 
@@ -18,6 +19,7 @@ class SensorDataAdapterTest {
     private lateinit var adapter: SensorDataAdapter
     private lateinit var sensorDataList: List<SensorData>
 
+    // Set up to initialize context, adapter and a mock sensorDataList
     @Before
     fun setup() {
         context = ApplicationProvider.getApplicationContext()
@@ -29,11 +31,13 @@ class SensorDataAdapterTest {
         adapter.setSensorData(sensorDataList)
     }
 
+    // Test to check if the correct number of the itemsList is returned
     @Test
     fun getItemCount() {
         assertEquals(sensorDataList.size, adapter.itemCount)
     }
 
+    // Test to check if the sensor data is formatted correctly
     @Test
     fun formatSensorValues() {
         val sensorValues1 = "1.0,2.0,3.0"

@@ -21,12 +21,14 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import junit.framework.TestCase.fail
 import org.junit.Rule
 
+// Class to test database functionality
 class SensorDatabaseTest {
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
     private lateinit var sensorDataDao: SensorDataDao
     private lateinit var sensorDatabase: SensorDatabase
 
+    // Setting up database and sensorDataDao
     @Before
     fun setup() {
         val context = ApplicationProvider.getApplicationContext<Context>()
@@ -34,11 +36,13 @@ class SensorDatabaseTest {
         sensorDataDao = sensorDatabase.sensorDataDao()
     }
 
+    // Closing database after the tests
     @After
     fun tearDown() {
         sensorDatabase.close()
     }
 
+    // Test to check if insert and get operation works as intended
     @Test
     fun insertAndGetSensorData() = runBlocking {
         val sensorData = SensorData(timestamp = System.currentTimeMillis(), sensorName = "Sensor 1", sensorValues = "1.0, 2.0, 3.0")
@@ -48,6 +52,7 @@ class SensorDatabaseTest {
         assertEquals(sensorData.sensorValues, sensorDataFromDb?.sensorValues)
     }
 
+    // Test to check if delete works as intended
     @Test
     fun deleteSensorData() = runBlocking {
         val sensorData = SensorData(timestamp = System.currentTimeMillis(), sensorName = "Sensor 1", sensorValues = "1.0, 2.0, 3.0")
@@ -63,7 +68,7 @@ class SensorDatabaseTest {
         }
     }
 
-
+    // Test to check if delete all works as intended
     @Test
     fun deleteAllSensorData() = runBlocking {
         val sensorData1 = SensorData(timestamp = System.currentTimeMillis(), sensorName = "Sensor 1", sensorValues = "1.0, 2.0, 3.0")
@@ -74,13 +79,9 @@ class SensorDatabaseTest {
         val deleteResult = sensorDataDao.deleteAll()
         assertEquals(2, deleteResult)
     }
-
-
-
-
 }
 
-
+// Utility function to get (or await) the value of LiveData
 fun <T> LiveData<T>.getOrAwaitValue(
     time: Long = 2,
     timeUnit: TimeUnit = TimeUnit.SECONDS,

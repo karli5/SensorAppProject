@@ -13,24 +13,28 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+// Espresso tests for main activity
 @RunWith(AndroidJUnit4::class)
 class MainActivityEspressoTest {
 
     @get:Rule
     var activityRule: ActivityScenarioRule<MainActivity> = ActivityScenarioRule(MainActivity::class.java)
 
+    // Test to check the navigation to sensors fragment and if the dropdown menu is available
     @Test
     fun testNavigationToSensorsFragment() {
         onView(withId(R.id.navigation_sensors)).perform(click())
         onView(withId(R.id.sensor_spinner)).check(matches(isDisplayed()))
     }
 
+    // Test to check if the navigation to the data fragment and correct title display is possible
     @Test
     fun testNavigationToDataFragment() {
         onView(withId(R.id.navigation_data)).perform(click())
         onView(withId(R.id.data_title)).check(matches(isDisplayed()))
     }
 
+    // Test to check if the start button in sensor fragment is functioning
     @Test
     fun testStartButtonFunctionality() {
         onView(withId(R.id.navigation_sensors)).perform(click())

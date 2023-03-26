@@ -21,6 +21,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import viewmodels.SensorDataViewModel
 
+// Class to choose a sensor from all avaiable sensors, recording sensor data and
+// display more informations about the sensor
 class SensorsFragment : Fragment(), SensorEventListener {
 
     private var _binding: FragmentSensorsBinding? = null
@@ -33,7 +35,7 @@ class SensorsFragment : Fragment(), SensorEventListener {
     private lateinit var sensorDataViewModel: SensorDataViewModel
     private var currentSensorValues: FloatArray = floatArrayOf()
 
-
+    // Inflate the layout of the fragment
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,13 +44,18 @@ class SensorsFragment : Fragment(), SensorEventListener {
         return binding.root
     }
 
+    // Additional view set up
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Reading out the available sensors
         sensorManager = requireActivity().getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensorList = sensorManager.getSensorList(Sensor.TYPE_ALL)
         sensorDataViewModel = ViewModelProvider(this).get(SensorDataViewModel::class.java)
 
+        // Setting up the spinner element
         setupSensorSpinner()
+
+        // Initializing the start button and defining switch conditions to stop
         binding.startButton.setOnClickListener {
             if (!isRecording) {
                 isRecording = true
@@ -61,20 +68,21 @@ class SensorsFragment : Fragment(), SensorEventListener {
                 sensorManager.unregisterListener(this)
             }
         }
-        //Save current Sensor
+        // Save current Sensor
         savedInstanceState?.let {
             val selectedSensorIndex = it.getInt("selectedSensorIndex")
             binding.sensorSpinner.setSelection(selectedSensorIndex)
         }
     }
 
-
+    // Setting up the spinner with the sensor names
     private fun setupSensorSpinner() {
         val sensorNames = sensorList.map { it.name }
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, sensorNames)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.sensorSpinner.adapter = adapter
 
+        // Formatting the sensor informations
         binding.sensorSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val sensor = sensorList[position]
@@ -99,7 +107,7 @@ class SensorsFragment : Fragment(), SensorEventListener {
     }
 
 
-
+    // Handle sensor data updates
     override fun onSensorChanged(event: SensorEvent?) {
         val liveSensorValues = event?.values
         if (liveSensorValues != null) {
@@ -107,15 +115,19 @@ class SensorsFragment : Fragment(), SensorEventListener {
             displayLiveSensorValues(liveSensorValues)
         }
     }
+
+    // Not implemented
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
-        // Implementieren Sie diese Methode, wenn Sie die Änderungen der Genauigkeit behandeln möchten
+
     }
 
+    // Unregister sensor listener when fragment is paused
     override fun onPause() {
         super.onPause()
         sensorManager.unregisterListener(this)
     }
 
+    // Register sensor listener when fragment is resumed
     override fun onResume() {
         super.onResume()
         if (isRecording) {
@@ -123,16 +135,18 @@ class SensorsFragment : Fragment(), SensorEventListener {
         }
     }
 
-
+    // Cleaning up once fragment is destroyed
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
+    // Return the current sensor values
     private fun getSensorValues(): FloatArray {
         return currentSensorValues
     }
 
+    // Displaying the formatted live sensor values
     private fun displayLiveSensorValues(sensorValues: FloatArray) {
         val liveSensorValuesText = when (sensorValues.size) {
             1 -> "X: ${sensorValues[0]}\nY: -\nZ: -"
@@ -142,7 +156,7 @@ class SensorsFragment : Fragment(), SensorEventListener {
         binding.liveSensorValues.text = liveSensorValuesText
     }
 
-
+    // Start recording the sensor data and saving every second one datapoint to the database
     private fun startRecording() {
         lifecycleScope.launch {
             while (isRecording) {
@@ -158,6 +172,7 @@ class SensorsFragment : Fragment(), SensorEventListener {
         }
     }
 
+    // Save the state of the fragment in case the phone is e.g. turned to landscape orientation
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt("selectedSensorIndex", binding.sensorSpinner.selectedItemPosition)

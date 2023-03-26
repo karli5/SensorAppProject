@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import database.SensorData
-
+// Representing Room database for sensor data
 @Database(entities = [SensorData::class], version = 1, exportSchema = false)
 abstract class SensorDatabase : RoomDatabase() {
 
@@ -15,6 +15,7 @@ abstract class SensorDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: SensorDatabase? = null
 
+        // Returning an instance of the database, creating it if necessary
         fun getInstance(context: Context): SensorDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
