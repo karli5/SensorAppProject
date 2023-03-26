@@ -3,8 +3,9 @@
     <string name="home">Home</string>
     <string name="sensors">Sensors</string>
     <string name="data">Data</string>
-    <string name="home_text">In this app ...</string>
+    <string name="home_text">In this app you can choose a sensor, read out meta data and observe live data. Furthermore you can persist sensor data every second by clicking the start button. In the data section you can read all sensor data in a list form from the databank and delete them by demand.</string>
     <string name="sensor_start">Start</string>
     <string name="sensor_stop">Stop</string>
-    <string name="delete_all">Alle löschen</string>
+    <string name="delete_all">Delete all</string>
+    <string name="databank_entries">Databank entries:</string>
 </resources>
