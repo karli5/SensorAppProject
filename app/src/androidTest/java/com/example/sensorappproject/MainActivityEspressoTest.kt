@@ -1,7 +1,9 @@
 package com.example.sensorappproject
-/*
+
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -15,31 +17,24 @@ import org.junit.runner.RunWith
 class MainActivityEspressoTest {
 
     @get:Rule
-    var activityRule: ActivityScenarioRule<MainActivity> =
-        ActivityScenarioRule(MainActivity::class.java)
+    var activityRule: ActivityScenarioRule<MainActivity> = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
-    fun testBottomNavigation() {
-        // Home -> Sensors
+    fun testNavigationToSensorsFragment() {
         onView(withId(R.id.navigation_sensors)).perform(click())
-
-        // Sensors -> Data
-        onView(withId(R.id.navigation_data)).perform(click())
-
-        // Data -> Home
-        onView(withId(R.id.navigation_home)).perform(click())
+        onView(withId(R.id.sensor_spinner)).check(matches(isDisplayed()))
     }
 
     @Test
-    fun testSensorListAndBackButton() {
-        // Home -> Sensors
+    fun testNavigationToDataFragment() {
+        onView(withId(R.id.navigation_data)).perform(click())
+        onView(withId(R.id.data_title)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun testStartButtonFunctionality() {
         onView(withId(R.id.navigation_sensors)).perform(click())
-
-        // Klicken Sie auf ein Element in der Liste
-        //onView(withId(R.id.sensor_recycler_view)).perform(click())
-
-        // Klicken Sie auf die Schaltfläche Zurück
-        onView(withId(android.R.id.home)).perform(click())
+        onView(withId(R.id.startButton)).perform(click())
+        onView(withId(R.id.liveSensorValues)).check(matches(isDisplayed()))
     }
 }
-*/
