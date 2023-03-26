@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 import viewmodels.SensorDataViewModel
 
 // Class to choose a sensor from all available sensors, recording sensor data and
-// display more informations about the sensor
+// display more details about the sensor
 class SensorsFragment : Fragment(), SensorEventListener {
 
     private var _binding: FragmentSensorsBinding? = null
