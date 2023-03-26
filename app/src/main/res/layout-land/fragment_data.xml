@@ -9,7 +9,7 @@
         android:id="@+id/data_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Datenbank-Einträge:"
+        android:text="@string/databank_entries"
         android:textSize="18sp" />
 
     <androidx.recyclerview.widget.RecyclerView
